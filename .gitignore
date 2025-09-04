@@ -1,0 +1,10 @@
+/server/.env
+/server/.idea
+/server/.env
+
+/ui/node_modules/*
+/ui/unpackage
+/ui/package-lock.json
+/ui/yarn-error.log
+/ui/npminstall-debug.log
+/ui/.idea/*
