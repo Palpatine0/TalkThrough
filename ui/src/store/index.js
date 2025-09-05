@@ -13,8 +13,8 @@ export default new Vuex.Store({
             item: 'public/image/item/'
         },
         links: [
+            {icon: 'fas fa-laptop-house', text: 'Personal'},
             {icon: 'fa-solid fa-layer-group', text: 'Professional'},
-            {icon: 'fas fa-laptop-house', text: 'Romantic'},
             {icon: 'fa-lg fa-solid fa-user', text: 'Casual'},
         ]
     },
