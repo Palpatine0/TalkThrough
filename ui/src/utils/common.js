@@ -6,7 +6,7 @@ if(!String.prototype.replaceAll) {
 var $common = {
 
 
-    generateUniqueCode: function(pattern, numCodes) {
+    generateUniqueCode: function(pattern = 'aaa111', numCodes = 1) {
         const bases = [];
         let totalPermutations = 1;
 

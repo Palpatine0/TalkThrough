@@ -2,6 +2,8 @@
 <v-app>
     <v-layout row class="bg">
       <NavBar />
+      <PersonalSurvey />
+
         <v-flex md3>
             <v-container>
             </v-container>
@@ -16,6 +18,8 @@
 <script>
 import MarkdownIt from 'markdown-it';
 import NavBar from "@/components/NavBar.vue";
+import PersonalSurvey from "@/views/PersonalSurvey.vue";
+
 
 const md = new MarkdownIt({
     breaks: true,
