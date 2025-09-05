@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Dashboard from "@/views/Dashboard/Dashboard.vue";
+import Dashboard from "@/views/Session/Session.vue";
 
 Vue.use(VueRouter)
 
