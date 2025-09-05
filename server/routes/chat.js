@@ -14,10 +14,14 @@ const promptEngine = new PromptEngine();
  */
 router.post('/new', async (req, res) => {
   try {
+    console.log('\n💬 === NEW CHAT SESSION ===');
     const { relationshipType, surveyAnswers } = req.body;
+    console.log('🔤 Relationship Type:', relationshipType);
+    console.log('📋 Survey Answers:', JSON.stringify(surveyAnswers, null, 2));
 
     // Validate required fields
     if (!relationshipType) {
+      console.log('❌ Missing relationshipType');
       return res.status(400).json({
         error: 'Missing required field: relationshipType',
         status: 400
@@ -42,9 +46,11 @@ router.post('/new', async (req, res) => {
 
     // Generate session ID
     const sessionId = uuidv4();
+    console.log('🆔 Generated Session ID:', sessionId);
 
     // Generate prompt template
     const promptTemplate = promptEngine.generatePrompt(relationshipType, surveyAnswers);
+    console.log('📝 Generated Prompt Template Length:', promptTemplate.length, 'characters');
 
     // Create session
     const sessionData = {
@@ -54,8 +60,10 @@ router.post('/new', async (req, res) => {
     };
 
     const session = sessionManager.createSession(sessionId, sessionData);
+    console.log('💾 Session created and stored');
 
     // Generate initial AI message
+    console.log('🚀 Generating initial AI message...');
     const initialMessage = await geminiAPI.generateResponse(
       "Hello, I'm here to help you navigate this conversation. What would you like to discuss?",
       { relationshipType, surveyAnswers },
@@ -69,6 +77,9 @@ router.post('/new', async (req, res) => {
       suggestedReplies: initialMessage.suggestedReplies
     });
 
+    console.log('✅ Session creation successful!');
+    console.log('💬 === END NEW CHAT SESSION ===\n');
+
     res.json({
       sessionId,
       initialMessage: initialMessage.aiResponse,
@@ -78,7 +89,7 @@ router.post('/new', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error creating new chat session:', error);
+    console.error('❌ Error creating new chat session:', error);
     res.status(500).json({
       error: 'Failed to create chat session',
       message: error.message,
@@ -93,11 +104,15 @@ router.post('/new', async (req, res) => {
  */
 router.post('/:sessionId/message', async (req, res) => {
   try {
+    console.log('\n💬 === NEW MESSAGE ===');
     const { sessionId } = req.params;
     const { message } = req.body;
+    console.log('🆔 Session ID:', sessionId);
+    console.log('👤 User Message:', message);
 
     // Validate required fields
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
+      console.log('❌ Invalid message format');
       return res.status(400).json({
         error: 'Message is required and must be a non-empty string',
         status: 400
@@ -107,6 +122,7 @@ router.post('/:sessionId/message', async (req, res) => {
     // Get session
     const session = sessionManager.getSession(sessionId);
     if (!session) {
+      console.log('❌ Session not found:', sessionId);
       return res.status(404).json({
         error: 'Session not found',
         code: 'SESSION_NOT_FOUND',
@@ -114,13 +130,17 @@ router.post('/:sessionId/message', async (req, res) => {
       });
     }
 
+    console.log('✅ Session found, relationship type:', session.relationshipType);
+
     // Add user message to session
     sessionManager.addMessage(sessionId, {
       type: 'user',
       content: message.trim()
     });
+    console.log('💾 User message added to session');
 
     // Generate AI response
+    console.log('🚀 Generating AI response...');
     const aiResponse = await geminiAPI.generateResponse(
       message.trim(),
       {
@@ -137,6 +157,9 @@ router.post('/:sessionId/message', async (req, res) => {
       suggestedReplies: aiResponse.suggestedReplies
     });
 
+    console.log('✅ Message processing successful!');
+    console.log('💬 === END MESSAGE ===\n');
+
     res.json({
       aiResponse: aiResponse.aiResponse,
       suggestedReplies: aiResponse.suggestedReplies,
@@ -145,7 +168,7 @@ router.post('/:sessionId/message', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error processing message:', error);
+    console.error('❌ Error processing message:', error);
     res.status(500).json({
       error: 'Failed to process message',
       message: error.message,

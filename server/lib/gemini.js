@@ -23,13 +23,26 @@ class GeminiAPI {
     try {
       const fullPrompt = `${promptTemplate}\n\nUser's current message: "${userMessage}"`;
       
+      console.log('\n🤖 === GEMINI API REQUEST ===');
+      console.log('📝 User Message:', userMessage);
+      console.log('🎯 Context:', JSON.stringify(context, null, 2));
+      console.log('📋 Full Prompt Length:', fullPrompt.length, 'characters');
+      console.log('🔍 Prompt Preview:', fullPrompt.substring(0, 200) + '...');
+      
       const result = await this.model.generateContent(fullPrompt);
       const response = await result.response;
       const text = response.text();
       
-      return this.parseResponse(text);
+      console.log('✅ Raw AI Response:', text);
+      console.log('📏 Response Length:', text.length, 'characters');
+      
+      const parsedResponse = this.parseResponse(text);
+      console.log('🎭 Parsed Response:', JSON.stringify(parsedResponse, null, 2));
+      console.log('🤖 === END GEMINI REQUEST ===\n');
+      
+      return parsedResponse;
     } catch (error) {
-      console.error('Gemini API Error:', error);
+      console.error('❌ Gemini API Error:', error);
       
       // Fallback response for API failures
       return {
