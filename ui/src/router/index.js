@@ -1,18 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Dashboard from "@/views/Dashboard/Dashboard.vue";
-import PersonalSurvey from "@/views/PersonalSurvey.vue";
+import Session from "@/views/Session/Session.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
-        name: 'Dashboard',
-        component: Dashboard
-    },
-    
+        name: 'Session',
+        component: Session,
+        props: true
+    }
 ]
 
 const router = new VueRouter({
