@@ -21,10 +21,7 @@
 - Modal/page appears with relationship type options:
   - **Personal**: Family, Friends, Romantic
   - **Professional**: Boss, Colleague, Client  
-  - **Friendly**: Acquaintance to Best Friend
-  - **Romantic**: Dating, Marriage, Situationship
-  - **Family**: Parents, Siblings, Extended Family
-  - **Acquaintances**: Small talk scenarios
+  - **Casual**: Acquaintances, neighbors, etc.
 - User selects appropriate relationship type
 
 ### 3. Dynamic Survey
