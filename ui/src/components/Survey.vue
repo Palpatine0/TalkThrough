@@ -10,14 +10,16 @@
         <v-container class="survey-container">
           <v-row justify="center" align="center">
             <v-col cols="12" md="10" lg="8" xl="6">
-              PersonalSurvey <v-card class="elevation-8" style="border-radius: 20px;">
+              {{ selectedItemText }}
+              <v-card class="elevation-8" style="border-radius: 20px;">
                 <v-card-title class="text-center pa-6">
                   <v-avatar size="60" class="mb-3" style="background-color: #00bcd4;">
                     <v-icon size="30" color="white">self_improvement</v-icon>
                   </v-avatar>
-                  <h2 class="headline mb-2"> Personal Coach Survey</h2>
+                  <h2 class="headline mb-2">{{ selectedItemText }} Survey</h2>
                   <p class="subtitle-1" style="color: #7f8c8d;">
                     Help me understand your current personal relationship situation
+                  </p>
                 </v-card-title>
 
                 <v-card-text class="pa-6">
@@ -29,10 +31,10 @@
                           1. What area of personal growth are you focusing on?
                         </h4>
                         <v-radio-group v-model="answers.growthArea" :rules="[v => !!v || 'Please select an option']">
-                          <v-radio 
-                            v-for="option in growthAreaOptions" 
+                          <v-radio
+                            v-for="option in growthAreaOptions"
                             :key="option.value"
-                            :label="option.label" 
+                            :label="option.label"
                             :value="option.value"
                             color="cyan"
                           ></v-radio>
@@ -74,10 +76,10 @@
                           3. How would you describe your current support system?
                         </h4>
                         <v-radio-group v-model="answers.supportSystem" :rules="[v => !!v || 'Please select an option']">
-                          <v-radio 
-                            v-for="option in supportSystemOptions" 
+                          <v-radio
+                            v-for="option in supportSystemOptions"
                             :key="option.value"
-                            :label="option.label" 
+                            :label="option.label"
                             :value="option.value"
                             color="cyan"
                           ></v-radio>
@@ -109,7 +111,7 @@
                     Back
                   </v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn 
+                  <v-btn
                     :disabled="!valid"
                     @click="submitSurvey"
                     color="cyan"
@@ -134,7 +136,7 @@ import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: 'PersonalSurvey',
-  components: { NavBar },
+  components: {NavBar},
   data() {
     return {
       valid: false,
@@ -145,22 +147,27 @@ export default {
         specificGoal: ''
       },
       growthAreaOptions: [
-        { value: 'confidence', label: 'Building self-confidence' },
-        { value: 'communication', label: 'Improving communication skills' },
-        { value: 'boundaries', label: 'Setting healthy boundaries' },
-        { value: 'emotional_intelligence', label: 'Developing emotional intelligence' },
-        { value: 'decision_making', label: 'Better decision making' },
-        { value: 'stress_management', label: 'Managing stress and anxiety' },
-        { value: 'goal_setting', label: 'Setting and achieving goals' },
-        { value: 'self_awareness', label: 'Increasing self-awareness' }
+        {value: 'confidence', label: 'Building self-confidence'},
+        {value: 'communication', label: 'Improving communication skills'},
+        {value: 'boundaries', label: 'Setting healthy boundaries'},
+        {value: 'emotional_intelligence', label: 'Developing emotional intelligence'},
+        {value: 'decision_making', label: 'Better decision making'},
+        {value: 'stress_management', label: 'Managing stress and anxiety'},
+        {value: 'goal_setting', label: 'Setting and achieving goals'},
+        {value: 'self_awareness', label: 'Increasing self-awareness'}
       ],
       supportSystemOptions: [
-        { value: 'strong', label: 'Strong - I have close friends and family who support me' },
-        { value: 'moderate', label: 'Moderate - Some support but could use more' },
-        { value: 'limited', label: 'Limited - I have few people I can rely on' },
-        { value: 'isolated', label: 'Isolated - I feel like I\'m mostly on my own' },
-        { value: 'professional', label: 'Professional - I rely on therapists or coaches' }
+        {value: 'strong', label: 'Strong - I have close friends and family who support me'},
+        {value: 'moderate', label: 'Moderate - Some support but could use more'},
+        {value: 'limited', label: 'Limited - I have few people I can rely on'},
+        {value: 'isolated', label: 'Isolated - I feel like I\'m mostly on my own'},
+        {value: 'professional', label: 'Professional - I rely on therapists or coaches'}
       ]
+    }
+  },
+  computed: {
+    selectedItemText() {
+      return this.$route.query.selectedItem || 'Personal Survey';
     }
   },
   methods: {
@@ -171,13 +178,13 @@ export default {
           answers: this.answers,
           timestamp: new Date()
         }
-        
+
         // Store survey data
         this.$store.dispatch('setSurveyData', surveyData)
-        
+
         // Show success message
         this.$toast.success('Survey submitted successfully! Your personal coach is ready to help.')
-        
+
         // Navigate back to home
         this.$router.push('/')
       }

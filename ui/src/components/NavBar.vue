@@ -13,7 +13,7 @@
       </v-list-item>
     </v-list>
     <v-list flat>
-      <v-list-item v-for="(item, i) in links" :key="i" link style="padding: 0 40px" @click="navigateTo(item.route)">
+      <v-list-item v-for="(item, i) in links" :key="i" link style="padding: 0 40px" @click="navigateTo(item)">
         <v-icon class="mb-2" style="color: #000;width: 15px">{{ item.icon }}</v-icon>
         <v-list-item-subtitle style="color: #000;font-size: 16px;margin-left: 20px">{{ item.text }}</v-list-item-subtitle>
       </v-list-item>
@@ -34,8 +34,12 @@ export default {
     ...mapState(['links'])
   },
   methods: {
-    navigateTo(route) {
-      this.$router.push(route);
+    navigateTo(item) {
+      // Navigate to Survey with the item text as a parameter
+      this.$router.push({
+        path: '/survey',
+        query: { selectedItem: item.text }
+      });
     }
   },
 
