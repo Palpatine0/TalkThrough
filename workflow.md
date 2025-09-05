@@ -1,7 +1,7 @@
 # TalkThrough - End-to-End Workflow
 
 ## Project Overview
-**TalkThrough** is a conversation guidance app that helps users navigate difficult conversations using AI-powered insights and suggested responses. Built for a 5-hour hackathon demo.
+**TalkThrough** is a conversation guidance app that helps users navigate difficult conversations using AI-powered insights and suggested responses. Built for a 4-hour hackathon demo.
 
 ## Tech Stack
 - **Frontend**: React, Next.js, TypeScript
